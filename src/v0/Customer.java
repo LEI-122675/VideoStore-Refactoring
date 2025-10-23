@@ -1,20 +1,19 @@
 package v0;
 
-import v7.Rental;
 
 import java.util.Vector;
 
 public class Customer
 {
     private String			_name;
-    private Vector<v7.Rental>	_rentals	= new Vector<v7.Rental>();
+    private Vector<v0.Rental>	_rentals	= new Vector<v0.Rental>();
 
     public Customer(String _name)
     {
         this._name = _name;
     }
 
-    public void addRental(v7.Rental arg)
+    public void addRental(v0.Rental arg)
     {
         _rentals.addElement(arg);
     }
@@ -29,8 +28,8 @@ public class Customer
         // header
         String result = "Rental Record for " + getName() + "\n";
 
-        for (v7.Rental each : _rentals)
-            result += "\t" + each.getMovie().getTitle() + "\t" + each.getMovie().getRentalAmount(each.getDaysRented()) + "\n";
+        for (v0.Rental each : _rentals)
+            result += "\t" + each.getMovie().getTitle() + "\t" + each.getMovie().getPrice().getRentalAmount(each.getDaysRented()) + "\n";
 
         // add footer lines
         result += "Amount owed is " + getTotalAmount() + "\n";
@@ -45,8 +44,8 @@ public class Customer
         result += "<h2>Rental Record for <i>" + getName() + "</i></h2>\n";
 
         result += "<ul>\n";
-        for (v7.Rental each : _rentals)
-            result += "\t<li>" + each.getMovie().getTitle() + "\t" +  each.getMovie().getRentalAmount(each.getDaysRented()) +"\n";
+        for (Rental each : _rentals)
+            result += "\t<li>" + each.getMovie().getTitle() + "\t" +  each.getMovie().getPrice().getRentalAmount(each.getDaysRented()) +"\n";
         result += "</ul>\n";
 
         // add footer lines
@@ -60,8 +59,8 @@ public class Customer
     public int getTotalFrequentRenterPoints()
     {
         int frequentRenterPoints = 0;
-        for (v7.Rental each : _rentals)
-            frequentRenterPoints += each._movie.getFrequentRentalPoints(each.getDaysRented());
+        for (v0.Rental each : _rentals)
+            frequentRenterPoints += each.getMovie().getPrice().getFrequentRentalPoints(each.getDaysRented());
         return frequentRenterPoints;
     }
 
@@ -69,7 +68,7 @@ public class Customer
     {
         double totalAmount = 0;
         for (Rental each : _rentals)
-            totalAmount += each.getMovie().getRentalAmount(each.getDaysRented());
+            totalAmount += each.getMovie().getPrice().getRentalAmount(each.getDaysRented());
         return totalAmount;
     }
 }

@@ -1,46 +1,21 @@
 package v0;
 
-public class Price
+public abstract class Price
 {
-    public enum Code {REGULAR, CHILDRENS, NEW_RELEASE}
 
-    public Code	_code;
 
-    public Price(Code code)
-    {
-        _code = code;
+    public boolean	_blueray;
+
+    public Price(boolean _blueray) {
+        this._blueray = _blueray;
     }
 
-    public Code getCode() {
-        return _code;
+    public boolean is_blueray() {
+        return _blueray;
     }
 
-    public double getRentalAmount(int duration)
-    {
-        double result = 0;
+    public abstract double getRentalAmount(int duration);
+    public abstract int getFrequentRentalPoints(int duration);
 
-        switch (_code)
-        {
-            case REGULAR:
-                result += 2;
-                if (duration > 2)
-                    result += (duration - 2) * 1.5;
-                break;
-            case NEW_RELEASE:
-                result += duration * 3;
-                break;
-            case CHILDRENS:
-                result += 1.5;
-                if (duration > 3)
-                    result += (duration - 3) * 1.5;
-                break;
-        }
-        return result;
-    }
-
-    public int getFrequentRentalPoints(int duration)
-    {
-        return (_code == Code.NEW_RELEASE) && duration > 1 ? 2 : 1;
-    }
 }
 
