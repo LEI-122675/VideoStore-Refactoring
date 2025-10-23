@@ -34,11 +34,30 @@ public class Customer
 
 		// add footer lines
 		result += "Amount owed is " + getTotalAmount() + "\n";
-		result += "You earned " + getFrequentRenterPoints() + " frequent renter points";
+		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
 		return result;
 	}
 
-    private int getFrequentRenterPoints() {
+    public String htmlStatement()
+    {
+        // header
+        String result = "<font size=\"5\" face=\"Georgia, Arial, Garamond\" color=\"green\">\n";
+        result += "<h2>Rental Record for <i>" + getName() + "</i></h2>\n";
+
+        result += "<ul>\n";
+        for (Rental each : _rentals)
+            result += "\t<li>" + each.getMovie().getTitle() + "\t" + each.getAmount()+"\n";
+        result += "</ul>\n";
+
+        // add footer lines
+        result += "Amount owed is " + getTotalAmount() + "<br>\n";
+        result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points<br>\n";
+        result += "</font>\n";
+
+        return result;
+    }
+
+    private int getTotalFrequentRenterPoints() {
         int frequentRenterPoints = 0;
         for (Rental each: _rentals) {
             frequentRenterPoints += each.getFrequentRenterPoints();
