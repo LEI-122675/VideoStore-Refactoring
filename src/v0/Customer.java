@@ -1,42 +1,42 @@
 package v0;
 
+import v7.Rental;
+
 import java.util.Vector;
 
 public class Customer
 {
-	private String			_name;
-	private Vector<Rental>	_rentals	= new Vector<Rental>();
+    private String			_name;
+    private Vector<v7.Rental>	_rentals	= new Vector<v7.Rental>();
 
-	public Customer(String _name)
-	{
-		this._name = _name;
-	}
+    public Customer(String _name)
+    {
+        this._name = _name;
+    }
 
-	public void addRental(Rental arg)
-	{
-		_rentals.addElement(arg);
-	}
+    public void addRental(v7.Rental arg)
+    {
+        _rentals.addElement(arg);
+    }
 
-	public String getName()
-	{
-		return _name;
-	}
+    public String getName()
+    {
+        return _name;
+    }
 
-	public String statement()
-	{
-		// header
-		String result = "Rental Record for " + getName() + "\n";
-		
-		for (Rental each: _rentals)
-		{
-			result += "\t" + each.getMovie().getTitle() + "\t" + each.getAmount() + "\n";
-        }
+    public String statement()
+    {
+        // header
+        String result = "Rental Record for " + getName() + "\n";
 
-		// add footer lines
-		result += "Amount owed is " + getTotalAmount() + "\n";
-		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
-		return result;
-	}
+        for (v7.Rental each : _rentals)
+            result += "\t" + each.getMovie().getTitle() + "\t" + each.getMovie().getRentalAmount(each.getDaysRented()) + "\n";
+
+        // add footer lines
+        result += "Amount owed is " + getTotalAmount() + "\n";
+        result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
+        return result;
+    }
 
     public String htmlStatement()
     {
@@ -45,8 +45,8 @@ public class Customer
         result += "<h2>Rental Record for <i>" + getName() + "</i></h2>\n";
 
         result += "<ul>\n";
-        for (Rental each : _rentals)
-            result += "\t<li>" + each.getMovie().getTitle() + "\t" + each.getAmount()+"\n";
+        for (v7.Rental each : _rentals)
+            result += "\t<li>" + each.getMovie().getTitle() + "\t" +  each.getMovie().getRentalAmount(each.getDaysRented()) +"\n";
         result += "</ul>\n";
 
         // add footer lines
@@ -57,20 +57,19 @@ public class Customer
         return result;
     }
 
-    private int getTotalFrequentRenterPoints() {
+    public int getTotalFrequentRenterPoints()
+    {
         int frequentRenterPoints = 0;
-        for (Rental each: _rentals) {
-            frequentRenterPoints += each.getFrequentRenterPoints();
-        }
+        for (v7.Rental each : _rentals)
+            frequentRenterPoints += each._movie.getFrequentRentalPoints(each.getDaysRented());
         return frequentRenterPoints;
     }
 
-    private double getTotalAmount() {
+    public double getTotalAmount()
+    {
         double totalAmount = 0;
-        for (Rental each: _rentals){
-            totalAmount += each.getAmount();
-        }
+        for (Rental each : _rentals)
+            totalAmount += each.getMovie().getRentalAmount(each.getDaysRented());
         return totalAmount;
     }
-
 }
